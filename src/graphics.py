@@ -1,3 +1,4 @@
+from cgitb import text
 import time
 import pygame
 from pygame.locals import *
@@ -147,7 +148,7 @@ class GraphicsEngine():
         for i in range(0, len(g.playersOnMap)):
             self.drawPlayerName(g.playersOnMap[i])
 
-        self.drawMapName(Map.name)
+        self.drawMapName(Map.name, Map.moral)
 
         # draw fps (todo - probably not necessary)
         #if g.boolFPS:
@@ -548,12 +549,18 @@ class GraphicsEngine():
 
         self.drawText(textX, textY, getPlayerName(index), color)
 
-    def drawMapName(self, mapname):
+    def drawMapName(self, mapname, moral):
         # todo: determine moral
+
+        if moral == 1:
+            text_color = textColor.BRIGHT_BLUE
+        else:
+            text_color = textColor.BRIGHT_RED
+
         textX = (MAX_MAPX + 1) * PIC_X / 2 - ((len(mapname)/2) * 8)
         textY = 1
 
-        self.drawText(textX, textY, mapname, textColor.BRIGHT_RED)
+        self.drawText(textX, textY, mapname, text_color)
 
     def drawMapAttributes(self):
         for x in range(MAX_MAPX):

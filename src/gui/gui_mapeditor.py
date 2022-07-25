@@ -270,6 +270,13 @@ class propertiesControl(gui.Table):
         self.td(gui.Input("0", size=4, name="inpMapRight"))
 
         self.tr()
+        self.td(gui.Label("Map Moral:", color=UI_FONT_COLOR))
+        select_moral = gui.Select(name='selMapMoral')
+        select_moral.add('PvP Zone', 0)
+        select_moral.add('Safe Zone', 1)
+        self.td(select_moral)
+
+        self.tr()
         self.td(gui.Spacer(10, 10))
 
         # npc list
@@ -294,6 +301,7 @@ class propertiesControl(gui.Table):
         self.value["inpMapDown"].value = str(Map.down)
         self.value["inpMapLeft"].value = str(Map.left)
         self.value["inpMapRight"].value = str(Map.right)
+        self.value["selMapMoral"].value = str(Map.moral)
 
         # load npcs
         self.npcList.clear()
@@ -549,6 +557,7 @@ class MapEditorContainer(gui.Container):
         Map.down  = int(self.propertiesCtrl.value["inpMapDown"].value)
         Map.left  = int(self.propertiesCtrl.value["inpMapLeft"].value)
         Map.right = int(self.propertiesCtrl.value["inpMapRight"].value)
+        Map.moral = int(self.propertiesCtrl.value["selMapMoral"].value)
 
         # retrieve the npcs from the list
         npcList = []
