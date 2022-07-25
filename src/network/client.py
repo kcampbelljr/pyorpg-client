@@ -5,9 +5,9 @@ from twisted.internet import reactor, error
 import json
 import base64
 
-from database import *
-from packettypes import *
-from datahandler import *
+from .database import *
+from .packettypes import *
+from .datahandler import *
 from utils.utils import *
 from gui.dialogs import alertMessageDialog
 from constants import *
@@ -47,16 +47,17 @@ class gameClientProtocol(LineReceiver):
         global dataHandler
 
         # handle base64 data
-        decodedData = base64.b64decode(data)
+        decodedData = base64.b64decode(data).decode('utf-8')
 
         log("Received data from server")
-        log(" -> " + decodedData)
+        log(f'-> {decodedData}')
 
         dataHandler.handleData(decodedData)
 
     def sendData(self, data):
         # encode data using base64
-        encodedData = base64.b64encode(data)
+        data_bytes = data.encode("utf-8")
+        encodedData = base64.b64encode(data_bytes)
         self.sendLine(encodedData)
 
 
@@ -73,10 +74,10 @@ class gameClientFactory(ClientFactory):
     def clientConnectionFailed(self, connector, reason):
         errorMsg = reason.getErrorMessage().split(':')
         alertMessageDialog('Unable to connect to server: ' + errorMsg[1] + errorMsg[2], 'An error occured')
-        print reason.getErrorMessage()
+        print(reason.getErrorMessage())
 
     def clientConnectionLost(self, connector, reason):
-        print reason.getErrorMessage()
+        print(reason.getErrorMessage())
         try:
             #reactor.stop()
             log("Disconnection from server")

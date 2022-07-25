@@ -175,7 +175,7 @@ class GraphicsEngine():
         # TODO: THIS IS NOT WORKING ATM
         #self.tileSurface = pygame.image.load("data/tilesets/Tiles1.bmp").convert_alpha()
         #self.tileSurface.set_colorkey((255, 0, 0))
-        print "lawl"
+        print("lawl")
 
     def drawMapFringeTile(self, x, y):
         if Map.tile[x][y].fringe != None:
@@ -598,4 +598,4 @@ class GraphicsEngine():
 
         if x >= 0 and x < MAX_MAPX:
             if y >= 0 and y < MAX_MAPY:
-                self.surface.blit(self.tileOutlineSurface, (MapTilePosition[x][y].x, MapTilePosition[x][y].y))
+                self.surface.blit(self.tileOutlineSurface, (MapTilePosition[int(x)][int(y)].x, MapTilePosition[int(x)][int(y)].y))
